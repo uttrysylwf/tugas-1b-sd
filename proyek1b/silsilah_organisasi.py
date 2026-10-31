@@ -1,5 +1,5 @@
 """Silsilah Organisasi UIN Suska Riau (prototype) - General Tree.
-Nama pegawai adalah data fiktif. Jalankan: python silsilah_organisasi.py"""
+Jalankan: python silsilah_organisasi.py"""
 
 
 class Node:
@@ -63,18 +63,27 @@ class TreeOrganisasi:
         return hasil
 
 
-def bangun_contoh():
-    t = TreeOrganisasi(Node("Ahmad Fauzi", "Rektor"))
+def bangun_struktur_baru():
+    """Struktur organisasi sesuai gambar pada soal nomor 11."""
+    t = TreeOrganisasi(Node("Rektor", "Root"))
     data = [
-        ("Ahmad Fauzi", "Budi Santoso", "Dekan FST"),
-        ("Ahmad Fauzi", "Citra Lestari", "Dekan Syariah dan Hukum"),
-        ("Budi Santoso", "Rina Marlina", "Ketua Prodi Teknik Informatika"),
-        ("Budi Santoso", "Fajar Nugroho", "Ketua Prodi Sistem Informasi"),
-        ("Citra Lestari", "Siti Aminah", "Ketua Prodi Hukum Keluarga"),
-        ("Rina Marlina", "Andi Saputra", "Dosen Struktur Data"),
-        ("Rina Marlina", "Maya Putri", "Dosen Basis Data"),
-        ("Fajar Nugroho", "Lia Ramadhani", "Dosen Rekayasa Perangkat Lunak"),
-        ("Siti Aminah", "Umar Faruq", "Dosen Hukum Perdata Islam"),
+        ("Rektor", "Senat Universitas", "Senat"),
+        ("Rektor", "Wakil Rektor I", "Bidang Akademik"),
+        ("Rektor", "Wakil Rektor II", "Bidang Administrasi Umum & Keuangan"),
+        ("Rektor", "Wakil Rektor III", "Bidang Kemahasiswaan & Kerja Sama"),
+        ("Rektor", "Dekan Fakultas Sains dan Teknologi", "Dekan"),
+        ("Dekan Fakultas Sains dan Teknologi", "Wakil Dekan I", "Bidang Akademik & Kelembagaan"),
+        ("Dekan Fakultas Sains dan Teknologi", "Wakil Dekan II", "Bidang AUPK"),
+        ("Dekan Fakultas Sains dan Teknologi", "Wakil Dekan III", "Bidang Kemahasiswaan"),
+        ("Dekan Fakultas Sains dan Teknologi", "Ketua Program Studi Teknik Informatika", "Kaprodi"),
+        ("Ketua Program Studi Teknik Informatika", "Sekretaris Program Studi", "Sekretaris"),
+        ("Ketua Program Studi Teknik Informatika", "Kepala Laboratorium Komputer", "Kepala Lab"),
+        ("Kepala Laboratorium Komputer", "Asisten Laboratorium", "Asisten"),
+        ("Kepala Laboratorium Komputer", "Teknisi Laboratorium", "Teknisi"),
+        ("Ketua Program Studi Teknik Informatika", "Koordinator Dosen", "Koordinator"),
+        ("Koordinator Dosen", "Dosen Pembimbing Akademik", "Dosen"),
+        ("Dosen Pembimbing Akademik", "Mahasiswa Bimbingan", "Leaf"),
+        ("Koordinator Dosen", "Dosen Pengampu Mata Kuliah", "Dosen"),
     ]
     for d in data:
         t.insert_node(*d)
@@ -82,14 +91,18 @@ def bangun_contoh():
 
 
 if __name__ == "__main__":
-    t = bangun_contoh()
-    t.insert_node("Rina Marlina", "Wahyu Hidayat", "Staf Administrasi Prodi TI")
-    t.insert_node("Fajar Nugroho", "Galih Permana", "Dosen Jaringan Komputer")
+    t = bangun_struktur_baru()
+
+    # Uji insert_node
     print("Insert atasan tidak ada:", t.insert_node("Tidak Ada", "X", "Dosen"))
-    for kata in ("dosen", "Rina", "ketua prodi", "xyz"):
+
+    # Uji search_node
+    for kata in ("dosen", "wakil", "kaprodi", "xyz"):
         print(f"\nCari '{kata}':")
         for n in t.search_node(kata):
             print("  -", n)
+
+    # Uji traversal
     tampil = lambda daftar: " -> ".join(n.nama for n in daftar)
     print("\nPre-order :", tampil(t.preorder()))
     print("In-order  :", tampil(t.inorder()))
